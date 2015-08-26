@@ -18,7 +18,7 @@ def difference(f1, f2):
 
 
 def package_finder():
-	thefile = open("new.txt", 'w')
+	thefile = open(new, 'w')
 	for row in soup.find_all('a'):
 		package_name = row.text
 		pattern = 'django-'
@@ -28,19 +28,26 @@ def package_finder():
 	print "file created"
 
 def list_finder():
-	diffile = open("dif.txt", 'w')
+	# diffile = open("dif.txt", 'w')
 	for item in new_package_list:
 		for link in soup.find_all('a',href=True, text=item):
 			print link['href']
 
+def new_to_old(new, old):
+	with open(new) as f:
+		    with open(old, "w") as f1:
+		        for line in f:
+		            f1.write(line)
+
+old='old.txt'
+new='new.txt'
 
 soup = BeautifulSoup(open("pypi.html"), "html.parser")
 
 package_finder()
 
-f1='old.txt'
-f2='new.txt'
-
-new_package_list = difference(f1,f2)
+new_package_list = difference(old,new)
 
 list_finder()
+
+new_to_old(new, old)
