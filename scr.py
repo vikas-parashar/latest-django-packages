@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import re
-import json
+import requests
+import urllib3
+
 
 def difference(f1, f2):
 	with open(f1) as f:
@@ -25,12 +27,13 @@ def package_finder():
 
 		for match in re.findall(pattern, package_name):
 			   thefile.write("%s\n" % package_name.encode('utf-8'))
-	print "file created"
+	# print "file created"
 
 def list_finder():
 	# diffile = open("dif.txt", 'w')
 	for item in new_package_list:
 		for link in soup.find_all('a',href=True, text=item):
+			package_url_list.append(link['href'])
 			print link['href']
 
 def new_to_old(new, old):
@@ -39,8 +42,10 @@ def new_to_old(new, old):
 		        for line in f:
 		            f1.write(line)
 
+
 old='old.txt'
 new='new.txt'
+package_url_list = []
 
 soup = BeautifulSoup(open("pypi.html"), "html.parser")
 
@@ -51,3 +56,16 @@ new_package_list = difference(old,new)
 list_finder()
 
 new_to_old(new, old)
+
+
+for el in package_url_list:
+	r = requests.get(el)
+	data = r.text
+	new_soup = BeautifulSoup(data, "html.parser")
+
+	para = new_soup.find('div', class_='section').find('p')
+	print new_package_list[package_url_list.index(el)]
+	print para.text
+	print el
+	print "\n"
+
