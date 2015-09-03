@@ -56,7 +56,6 @@ def subscribe():
                 template_content= template_content,
                 from_email=env('FROM_MAIL'),
                 to=[{'email': 'svnitvikas@gmail.com'}],
-                # text= 'helo',
             )
 
             return render_template('success.html')
