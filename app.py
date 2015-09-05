@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 app.config['MANDRILL_API_KEY'] = env('API_KEY')
 mandrill = Mandrill(app)
 
-# Create our database model
+
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
