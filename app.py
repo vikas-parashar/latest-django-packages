@@ -50,10 +50,12 @@ def subscribe():
             db.session.add(reg)
             db.session.commit()
             print reg.email
+
             mandrill.send_email(
                 from_email=env('FROM_MAIL'),
                 to=[{'email': 'svnitvikas@gmail.com'}],
-                text ="mail.html"
+                text= 'helo',
+                template_name= 'mail.html'
             )
 
             return render_template('success.html')
