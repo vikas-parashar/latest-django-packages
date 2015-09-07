@@ -52,10 +52,9 @@ def subscribe():
             print reg.email
             template_content = [{'content': 'example content', 'name': 'example name'}]
             mandrill.send_email(
-                template_name= 'mail.html',
-                template_content= template_content,
                 from_email=env('FROM_MAIL'),
                 to=[{'email': 'svnitvikas@gmail.com'}],
+                text="hello world"
             )
 
             return render_template('success.html')
