@@ -34,7 +34,7 @@ def index():
 
     list_finder()
     new_to_old()
-    mail_content()
+
 
     return render_template('index.html')
 
@@ -50,11 +50,11 @@ def subscribe():
             db.session.add(reg)
             db.session.commit()
             print reg.email
-            template_content = [{'content': 'example content', 'name': 'example name'}]
             mandrill.send_email(
                 from_email=env('FROM_MAIL'),
                 to=[{'email': 'svnitvikas@gmail.com'}],
-                text="hello world"
+                # text="hello world"
+                html=render_template("mail.html")
             )
 
             return render_template('success.html')
