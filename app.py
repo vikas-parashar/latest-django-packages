@@ -30,10 +30,11 @@ class User(db.Model):
 # Set "homepage" to index.html
 @app.route('/')
 def index():
-    package_finder()
+    # package_finder()
+    # new_package_list = difference()
 
-    list_finder()
-    new_to_old()
+    # list_finder()
+    # new_to_old()
 
 
     return render_template('index.html')
@@ -50,11 +51,13 @@ def subscribe():
             db.session.add(reg)
             db.session.commit()
             print reg.email
+            mcl = call_other_functions()
+            print mcl
             mandrill.send_email(
                 from_email=env('FROM_MAIL'),
                 to=[{'email': 'svnitvikas@gmail.com'}],
                 # text="hello world"
-                html=render_template("mail.html")
+                html=render_template("mail.html", mcl=mcl)
             )
 
             return render_template('success.html')
